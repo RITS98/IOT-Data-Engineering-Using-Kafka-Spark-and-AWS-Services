@@ -16,6 +16,8 @@ If the AWS credentials is already set in the local computer, we can get it using
 `aws configure export-credentials`
 <img width="1695" height="864" alt="image" src="https://github.com/user-attachments/assets/cdf59926-3ac6-46e1-9b95-c0300bbeda48" />
 
+<img width="1692" height="287" alt="image" src="https://github.com/user-attachments/assets/9f17acd7-b867-4720-bdd1-5cef2bd24316" />
+
 To set up AWS credentials in local computer, follow the below steps
 1. Go to IAM service in AWS
 2. Click on `My Quick Credentials`
