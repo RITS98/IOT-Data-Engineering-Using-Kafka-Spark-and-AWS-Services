@@ -1,0 +1,17 @@
+confluent_kafka
+apache-airflow
+pyspark
+simplejson
+boto3
+pandas
+sqlalchemy
+apache-airflow-providers-postgres
+apache-airflow-providers-http
+apache-airflow-providers-amazon
+apache-airflow-providers-redis
+apache-airflow-providers-ssh
+apache-airflow-providers-docker
+apache-airflow-providers-sqlite
+apache-airflow-providers-ftp
+s3fs
+requests
