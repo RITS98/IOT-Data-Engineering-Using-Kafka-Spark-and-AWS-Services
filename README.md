@@ -216,6 +216,10 @@ networks:
 6. Run the commangs as shown below.
 <img width="1257" height="709" alt="image" src="https://github.com/user-attachments/assets/d5a371df-d246-48e2-8486-c5e2b9c8b0a8" />
 
+7. To delete topics
+<img width="667" height="214" alt="image" src="https://github.com/user-attachments/assets/7e1c9e39-88a9-4047-8579-f10d73f91517" />
+
+
 ### Store AWS configuration keys
 
 1. Gets AWS key from you local cli if you have set.
