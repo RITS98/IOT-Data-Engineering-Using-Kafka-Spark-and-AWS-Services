@@ -220,7 +220,8 @@ networks:
 
 
 
-### Create a connection in Apache Airflow
+### [OPTIONAL] Create a connection in Apache Airflow (use it if you want to orchestrate the whole process)
+
 1. Go to Admin -> Connections -> Add Connection
 2. Give a name
 3. Add the credentials.
