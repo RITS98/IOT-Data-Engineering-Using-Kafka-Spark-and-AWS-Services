@@ -216,6 +216,19 @@ networks:
 6. Run the commangs as shown below.
 <img width="1257" height="709" alt="image" src="https://github.com/user-attachments/assets/d5a371df-d246-48e2-8486-c5e2b9c8b0a8" />
 
+### Store AWS configuration keys
+
+1. Gets AWS key from you local cli if you have set.
+2. Follow this if not set (https://docs.aws.amazon.com/cli/v1/userguide/cli-authentication-user.html)
+3. Use below command to get the keys from your local cli
+```
+aws configure export-credentials
+```
+4. Store them in python script like this
+<img width="802" height="353" alt="image" src="https://github.com/user-attachments/assets/41de1a12-0006-4d2e-b3b5-f17a3b56b1a7" />
+
+
+
 
 
 
