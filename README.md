@@ -228,6 +228,16 @@ aws configure export-credentials
 <img width="802" height="353" alt="image" src="https://github.com/user-attachments/assets/41de1a12-0006-4d2e-b3b5-f17a3b56b1a7" />
 
 
+### Check Spark is running
+1. Go to `localhost:9090` and check. It should look like this.
+<img width="836" height="689" alt="image" src="https://github.com/user-attachments/assets/a3b8c16e-85eb-422f-a183-325c41ebef23" />
+
+2. (optional) if you want to change the spark version, in the SparkSession builder, you need to change the jars as well. Go to the maven repository (https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10_2.13/4.0.0) (Choose the version accordingly) and replace the jar configuration.
+
+<img width="1019" height="300" alt="image" src="https://github.com/user-attachments/assets/6f8e928d-baa4-44ef-9e68-01ed8a527324" />
+
+3. Run the code
+
 
 
 
