@@ -240,11 +240,8 @@ aws configure export-credentials
 
 <img width="1019" height="300" alt="image" src="https://github.com/user-attachments/assets/6f8e928d-baa4-44ef-9e68-01ed8a527324" />
 
-3. Run the code
-
-
-
-
+3. Run the code using the make file command `make spark-submit`
+4. To install makefile `brew install make`
 
 
 ### [OPTIONAL] Create a connection in Apache Airflow (use it if you want to orchestrate the whole process)
@@ -286,3 +283,87 @@ aws s3 ls  # list s3 buckets, should not throw an error
 <img width="3342" height="4361" alt="image" src="https://github.com/user-attachments/assets/5a379fa6-13ec-4484-97db-9f21b7d23e31" />
 
 <img width="1110" height="311" alt="image" src="https://github.com/user-attachments/assets/73391ac8-1c6d-4fd8-b8b7-a139763b8e9c" />
+
+### Create a AWS crawler
+1. Go to AWS Glue service.
+2. Click on crawler -> Create Crawler.
+3. The craweler will extract the metadata information from the parquet file like column names, data types etc and make it store in a Glue Database `smartcity`
+4. Fill the information like source which is S3 parquet file in the data folder, exclude pattern include `_spark_metadata` folder and choose the Glue database `smartcity` as target.
+<img width="991" height="458" alt="image" src="https://github.com/user-attachments/assets/573892ec-b925-4025-9208-6054db4f4357" />
+
+<img width="809" height="467" alt="image" src="https://github.com/user-attachments/assets/613e1133-b8da-427c-af65-8c7d05d90b4e" />
+
+5. Check the database tables are created or not.
+<img width="688" height="474" alt="image" src="https://github.com/user-attachments/assets/ea51b081-f10d-4c3b-9cd4-a5286fc6110c" />
+
+### Create AWS Redshift and connect to local DBeaver software
+
+#### 1. Sign In to AWS Console
+- URL: https://console.aws.amazon.com/
+- Login with your AWS credentials.
+
+
+#### 2. Open Amazon Redshift Service
+- In the AWS Console, search for **Redshift** and open it.
+
+#### 3. Click “Create cluster”
+
+
+#### 4. Choose Cluster Creation Method
+- Select **“Provisioned”** for full control over nodes and resources.
+- Use **“Serverless”** if you want AWS to manage compute automatically.
+
+
+#### 5. Configure Cluster Details
+
+- **Cluster Identifier**: e.g., `redshift-cluster-ritayan`
+- **Database name**: e.g., `dev` (default)
+- **Port**: `5439` (default)
+- **Master username**: e.g., `admin`
+- **Master password**: Strong password
+
+#### 6. Choose Node Type and Cluster Size
+
+- **Node Type**: e.g., `dc2.large`, `ra3.xlplus`
+- **Cluster Type**: 
+  - `single-node` for development
+  - `multi-node` for production
+
+<img width="1437" alt="image" src="https://github.com/user-attachments/assets/a3461bfe-2758-4640-b27f-ae1181d6093a" />
+
+<img width="1282" alt="image" src="https://github.com/user-attachments/assets/82748d53-c1e8-4c06-9888-254eb2ec253a" />
+
+#### 7. Set Network and Security
+
+- **VPC**: Select your Virtual Private Cloud
+- **Subnet Group**: Choose a Redshift subnet group
+- **VPC Security Group**: Ensure port 5439 is open to your IP
+- **Give Proper IAM roles**
+
+<img width="1423" alt="image" src="https://github.com/user-attachments/assets/3ebb4bfd-ca93-47f1-a9f7-7246374847b0" />
+<img width="1345" alt="image" src="https://github.com/user-attachments/assets/873ac542-8456-45a3-8ed0-8ff9b0ce9364" />
+
+
+#### 8. Review and Launch
+- Review all configurations
+- Click **“Create cluster”**
+
+<img width="1568" alt="image" src="https://github.com/user-attachments/assets/350a2325-406d-4489-b46b-7fb7b09a6858" />
+
+
+
+
+## Results
+1. First run `make kafka-producer`. It will produce the data inside the kafka topic.
+<img width="876" height="289" alt="image" src="https://github.com/user-attachments/assets/64b4c8f6-30fb-45be-b6ee-9467b649adfe" />
+
+2. Run the spark job `make spark-submit`. It will submit the spark job. It will download the required jars from the maven repository and will start the spark job.
+<img width="615" height="409" alt="image" src="https://github.com/user-attachments/assets/fa24d955-6c41-4cc7-9715-dc2d88737d8a" />
+
+3. Check AWS S3 for the files in the `data` folder
+<img width="616" height="392" alt="image" src="https://github.com/user-attachments/assets/d22c1846-69da-4763-bb67-a0e74a2bb703" />
+<img width="899" height="350" alt="image" src="https://github.com/user-attachments/assets/222b65ed-7510-4c3f-89ed-0463ca8d8da7" />
+
+4. Run the crawler in the AWS Glue to reflect the latest data in the Glue Database.
+5. Go to DBeaver which is connected to AWS Redshift.
+
