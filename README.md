@@ -237,6 +237,7 @@ To set up AWS credentials in local computer, follow the below steps
 3. Create a Access Key as given below
 <img width="1676" height="787" alt="image" src="https://github.com/user-attachments/assets/c166990e-22de-4ee8-b5f8-2cc66cf126c8" />
 4. Set up the credentials in local environment
+
 ```
 export AWS_ACCESS_KEY_ID=[YOUR ACCESS KEY]
 export AWS_SECRET_ACCESS_KEY=[YOUR SECRET KEY]
@@ -244,6 +245,7 @@ export AWS_DEFAULT_REGION=[YOUR REGION]
 ```
 
 5. Check if it is working
+
 ```
 aws s3 ls  # list s3 buckets, should not throw an error
 ```
