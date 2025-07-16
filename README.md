@@ -33,212 +33,74 @@ This is a comprehensive Real-time IoT Data Engineering Pipeline that simulates s
 ```mermaid
 graph TB
     %% Data Sources
-    subgraph "IoT Data Sources"
-        VS[Vehicle Sensors]
-        GPS[GPS Trackers]
-        TC[Traffic Cameras]
-        WS[Weather Stations]
-        ES[Emergency Systems]
+    subgraph "IoT Sensors"
+        V[Vehicle Data]
+        G[GPS Data]
+        T[Traffic Cameras]
+        W[Weather Stations]
+        E[Emergency Systems]
     end
 
-    %% Data Generation Layer
-    subgraph "Data Generation Layer"
-        DG[Data Generator<br/>main.py]
-        VS --> DG
-        GPS --> DG
-        TC --> DG
-        WS --> DG
-        ES --> DG
-    end
-
-    %% Message Streaming Layer
-    subgraph "Kafka Streaming Platform"
-        ZK[Zookeeper<br/>Port: 2181]
-        KB[Kafka Broker<br/>Port: 9092]
-        
-        subgraph "Kafka Topics"
-            VT[vehicle_data]
-            GT[gps_data]
-            TT[traffic_data]
-            WT[weather_data]
-            ET[emergency_data]
-        end
-        
-        ZK --> KB
-        KB --> VT
-        KB --> GT
-        KB --> TT
-        KB --> WT
-        KB --> ET
-    end
-
-    %% Spark Processing Layer
-    subgraph "Spark Cluster"
-        SM[Spark Master<br/>Port: 7077<br/>UI: 9090]
-        SW1[Spark Worker 1<br/>2 cores, 2GB RAM]
-        SW2[Spark Worker 2<br/>2 cores, 2GB RAM]
-        
-        subgraph "Spark Streaming Job"
-            SSJ[spark-city.py<br/>Structured Streaming]
-            
-            subgraph "Data Schemas"
-                VSch[Vehicle Schema]
-                GSch[GPS Schema]
-                TSch[Traffic Schema]
-                WSch[Weather Schema]
-                ESch[Emergency Schema]
-            end
-            
-            subgraph "Stream Processing"
-                SP[Schema Validation]
-                WM[Watermarking<br/>2 min window]
-                TR[Transformations]
-            end
-        end
-        
-        SM --> SW1
-        SM --> SW2
-        SW1 --> SSJ
-        SW2 --> SSJ
-    end
-
-    %% AWS Cloud Layer
-    subgraph "AWS Cloud Services"
-        subgraph "Data Lake (S3)"
-            S3[S3 Bucket<br/>iot-data-bucket-ritayan]
-            
-            subgraph "Data Folders"
-                VDF[/data/vehicle_data/]
-                GDF[/data/gps_data/]
-                TDF[/data/traffic_data/]
-                WDF[/data/weather_data/]
-                EDF[/data/emergency_data/]
-            end
-            
-            subgraph "Checkpoint Folders"
-                VCF[/checkpoint/vehicle_data/]
-                GCF[/checkpoint/gps_data/]
-                TCF[/checkpoint/traffic_data/]
-                WCF[/checkpoint/weather_data/]
-                ECF[/checkpoint/emergency_data/]
-            end
-            
-            S3 --> VDF
-            S3 --> GDF
-            S3 --> TDF
-            S3 --> WDF
-            S3 --> EDF
-            S3 --> VCF
-            S3 --> GCF
-            S3 --> TCF
-            S3 --> WCF
-            S3 --> ECF
-        end
-        
-        subgraph "Data Catalog (Glue)"
-            GC[AWS Glue Crawler]
-            GD[Glue Database<br/>smartcity]
-            GT_VEH[vehicle_data_table]
-            GT_GPS[gps_data_table]
-            GT_TRF[traffic_data_table]
-            GT_WTH[weather_data_table]
-            GT_EMG[emergency_data_table]
-            
-            GC --> GD
-            GD --> GT_VEH
-            GD --> GT_GPS
-            GD --> GT_TRF
-            GD --> GT_WTH
-            GD --> GT_EMG
-        end
-        
-        subgraph "Data Warehouse (Redshift)"
-            RS[Redshift Cluster<br/>Port: 5439]
-            ES_SCHEMA[External Schema]
-            ET_VEH[External Table: vehicle_data]
-            ET_GPS[External Table: gps_data]
-            ET_TRF[External Table: traffic_data]
-            ET_WTH[External Table: weather_data]
-            ET_EMG[External Table: emergency_data]
-            
-            RS --> ES_SCHEMA
-            ES_SCHEMA --> ET_VEH
-            ES_SCHEMA --> ET_GPS
-            ES_SCHEMA --> ET_TRF
-            ES_SCHEMA --> ET_WTH
-            ES_SCHEMA --> ET_EMG
-        end
-    end
-
-    %% Analytics & Visualization Layer
-    subgraph "Analytics & Visualization"
-        DB[DBeaver<br/>SQL Client]
-        DASH[Analytics Dashboard]
-        REP[Reports & KPIs]
-        
-        DB --> DASH
-        DASH --> REP
-    end
-
-    %% Container Infrastructure
-    subgraph "Docker Infrastructure"
-        DC[Docker Compose]
-        NET[Bridge Network<br/>my_network]
-        
-        subgraph "Health Checks"
-            ZK_HC[Zookeeper Health]
-            KB_HC[Kafka Health]
-            SM_HC[Spark Master Health]
-        end
-        
-        DC --> NET
-        NET --> ZK_HC
-        NET --> KB_HC
-        NET --> SM_HC
-    end
-
-    %% Data Flow Connections
-    DG -->|Publish Messages| KB
-    VT -->|Stream Read| SSJ
-    GT -->|Stream Read| SSJ
-    TT -->|Stream Read| SSJ
-    WT -->|Stream Read| SSJ
-    ET -->|Stream Read| SSJ
+    %% Data Pipeline
+    DG[Data Generator<br/>Python Script]
     
-    SSJ -->|Write Parquet| S3
-    S3 -->|Crawl Metadata| GC
-    GD -->|External Tables| RS
-    RS -->|Query Data| DB
-
-    %% Operational Commands
-    subgraph "Operations"
-        MK_PROD[make kafka-producer]
-        MK_SPARK[make spark-submit]
-        DC_UP[docker compose up]
-        DC_DOWN[docker compose down]
-        
-        MK_PROD -->|Start| DG
-        MK_SPARK -->|Submit| SSJ
-        DC_UP -->|Deploy| DC
-        DC_DOWN -->|Stop| DC
+    subgraph "Kafka"
+        K[Kafka Broker<br/>5 Topics]
     end
+    
+    subgraph "Spark Cluster"
+        SM[Spark Master]
+        SW[Spark Workers x2]
+        SS[Stream Processing]
+    end
+    
+    subgraph "AWS Cloud"
+        S3[S3 Data Lake<br/>Parquet Files]
+        GLUE[Glue Catalog<br/>Schema Registry]
+        RS[Redshift<br/>Data Warehouse]
+    end
+    
+    DB[DBeaver<br/>Analytics]
+
+    %% Flow
+    V --> DG
+    G --> DG
+    T --> DG
+    W --> DG
+    E --> DG
+    
+    DG --> K
+    K --> SM
+    SM --> SW
+    SW --> SS
+    SS --> S3
+    S3 --> GLUE
+    GLUE --> RS
+    RS --> DB
+
+    %% Commands
+    subgraph "Operations"
+        C1[make kafka-producer]
+        C2[make spark-submit]
+        C3[docker compose up]
+    end
+    
+    C1 -.-> DG
+    C2 -.-> SS
+    C3 -.-> K
 
     %% Styling
-    classDef iotSource fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
-    classDef kafka fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
-    classDef spark fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef aws fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
-    classDef analytics fill:#fff8e1,stroke:#f57f17,stroke-width:2px
-    classDef docker fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
-    classDef operation fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef source fill:#e3f2fd,stroke:#1976d2
+    classDef processing fill:#f3e5f5,stroke:#7b1fa2
+    classDef storage fill:#e8f5e8,stroke:#388e3c
+    classDef analytics fill:#fff3e0,stroke:#f57c00
+    classDef ops fill:#fce4ec,stroke:#c2185b
 
-    class VS,GPS,TC,WS,ES,DG iotSource
-    class ZK,KB,VT,GT,TT,WT,ET kafka
-    class SM,SW1,SW2,SSJ,VSch,GSch,TSch,WSch,ESch,SP,WM,TR spark
-    class S3,VDF,GDF,TDF,WDF,EDF,VCF,GCF,TCF,WCF,ECF,GC,GD,GT_VEH,GT_GPS,GT_TRF,GT_WTH,GT_EMG,RS,ES_SCHEMA,ET_VEH,ET_GPS,ET_TRF,ET_WTH,ET_EMG aws
-    class DB,DASH,REP analytics
-    class DC,NET,ZK_HC,KB_HC,SM_HC docker
-    class MK_PROD,MK_SPARK,DC_UP,DC_DOWN operation
+    class V,G,T,W,E,DG source
+    class K,SM,SW,SS processing
+    class S3,GLUE,RS storage
+    class DB analytics
+    class C1,C2,C3 ops
 ```
 
 ## Data Sources & Simulation
