@@ -30,7 +30,7 @@ This is a comprehensive Real-time IoT Data Engineering Pipeline that simulates s
     - Volume mounts for code sharing
 
 ### Architecture Diagram
-```
+```mermaid
 graph TB
     %% Data Sources
     subgraph "IoT Data Sources"
