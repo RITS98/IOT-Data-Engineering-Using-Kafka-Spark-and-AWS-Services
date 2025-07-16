@@ -89,12 +89,12 @@ graph TB
     C2 -.-> SS
     C3 -.-> K
 
-    %% Styling
-    classDef source fill:#e3f2fd,stroke:#1976d2
-    classDef processing fill:#f3e5f5,stroke:#7b1fa2
-    classDef storage fill:#e8f5e8,stroke:#388e3c
-    classDef analytics fill:#fff3e0,stroke:#f57c00
-    classDef ops fill:#fce4ec,stroke:#c2185b
+    %% Styling with vibrant colors and black text
+    classDef source fill:#FF6B6B,stroke:#000,stroke-width:2px,color:#000
+    classDef processing fill:#4ECDC4,stroke:#000,stroke-width:2px,color:#000
+    classDef storage fill:#45B7D1,stroke:#000,stroke-width:2px,color:#000
+    classDef analytics fill:#96CEB4,stroke:#000,stroke-width:2px,color:#000
+    classDef ops fill:#FFEAA7,stroke:#000,stroke-width:2px,color:#000
 
     class V,G,T,W,E,DG source
     class K,SM,SW,SS processing
