@@ -350,7 +350,13 @@ aws s3 ls  # list s3 buckets, should not throw an error
 
 <img width="1568" alt="image" src="https://github.com/user-attachments/assets/350a2325-406d-4489-b46b-7fb7b09a6858" />
 
+#### 9. Connect to DBeaver
+- The jdbc endpoint in the cluder information page is copied
+- The username and password is used to create the connection as shown
 
+<img width="744" height="634" alt="image" src="https://github.com/user-attachments/assets/da78b4a2-b57b-400b-ad12-e595a43cfa23" />
+
+- Click on OK
 
 
 ## Results
@@ -366,4 +372,20 @@ aws s3 ls  # list s3 buckets, should not throw an error
 
 4. Run the crawler in the AWS Glue to reflect the latest data in the Glue Database.
 5. Go to DBeaver which is connected to AWS Redshift.
+6. Now connect to the Glue Database using the RedShift.
+```
+CREATE EXTERNAL SCHEME <GIVE_NAME>
+FROM DATA CATALOG
+DATABASE <glue_database_name>
+IAM_ROLE <iam_role_created_to_give_reshift_access_to_glue_catelog>
+REGION 'us-east-1'
+```
+
+<img width="546" height="489" alt="image" src="https://github.com/user-attachments/assets/f735d6b7-127e-4cdf-aeaf-81d701940ecd" />
+
+<img width="584" height="307" alt="image" src="https://github.com/user-attachments/assets/2a880542-0083-4c6a-ae63-42c36d734778" />
+
+<img width="632" height="389" alt="image" src="https://github.com/user-attachments/assets/dda6ef79-0214-4d70-bd41-abecaee8521d" />
+
+
 
