@@ -71,14 +71,14 @@ def generate_gps_data(device_id, timestamp, vehicle_type='private'):
         'timestamp': timestamp,
         'speed': random.uniform(0, 40),
         'direction': 'North-East',
-        'vechicleType': vehicle_type,
+        'vehicleType': vehicle_type,
     }
 
 def generate_traffic_camera_data(device_id, timestamp, location, camera_id):
     return {
         'id': uuid.uuid4(),
-        'deviceIdd': device_id,
-        'cameraId': camera_id,
+        'device_id': device_id,
+        'camera_id': camera_id,
         'location': location,
         'timestamp': timestamp,
         'snapshot': 'Base64EncodedString',
@@ -103,7 +103,7 @@ def generate_emergency_incident_data(device_id, timestamp, location):
         'id': uuid.uuid4(),
         'device_id': device_id,
         'incident_id': uuid.uuid4(),
-        'incidentType': random.choice(['Accident', 'Fire', 'Medical', 'Police', 'None']),
+        'type': random.choice(['Accident', 'Fire', 'Medical', 'Police', 'None']),
         'timestamp': timestamp,
         'location': location,
         'severity': random.choice(['Low', 'Medium', 'High']),
